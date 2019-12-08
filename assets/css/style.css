@@ -1,0 +1,35 @@
+.headerContainer {
+    width: 960px;
+    margin: auto;
+}
+
+.jumbotron{
+    background-color: #0978e7;
+} 
+
+.fa-newspaper {
+    color: #eee;
+}
+
+h1 {
+    color: #eee;
+    font-weight: bold;
+    font-size: 44px !important;
+}
+
+#searchParameter {
+    width: 360px;
+    margin: auto;
+    margin-right: 70%;
+}
+
+#topArticlesSection {
+    width: 960px;
+    margin: auto;
+}
+
+
+.btn-team {
+    background-color: #B44;
+    color: #ffffff;
+}
