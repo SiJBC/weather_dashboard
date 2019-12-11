@@ -33,3 +33,11 @@ h1 {
     background-color: #B44;
     color: #ffffff;
 }
+
+.todayWeather{
+    background-color: #acaaab;
+    width:480px;
+    height:320px;
+    margin-left: 50%;
+
+}
