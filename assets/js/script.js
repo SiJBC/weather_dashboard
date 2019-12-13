@@ -41,7 +41,7 @@ displayForecast()
                 $(".city").append("<p>" +  "Humidity:"  + response.main.humidity + "</p>");
                 $(".city").append("<p>" + "Temperature (c)" + ((response.main.temp) - 273).toFixed(2) + "</p>");
                 $(".savedCity").append("<ul><button>" + response.name + "</ul></button>")
-                // $(".savedCity").children().addClass(response.name)
+                $(".savedCity").children().last().addClass(response.name)
                 
             localStorage.setItem("savedCity", city)
             
