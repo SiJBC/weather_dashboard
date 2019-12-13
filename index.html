@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -13,14 +12,16 @@
     <script src="https://kit.fontawesome.com/587cb420b5.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script defer src="./assets/js/script.js"></script>
+
     <title>Weather Dashboard</title>
 
 </head>
 
 <body>
-    <div class="headerContainer">
+    <div class="container-fluid">
+
         <div class="jumbotron jumbotron-fluid">
-            <div class="container">
+            <div class="container-fluid">
                 <h1 class="display-4 text center font-weight-bold">
                     Weather Dashboard
                     <i class="wi-sunset:before"></i>
@@ -30,33 +31,26 @@
     </div>
 
     <div id="page-container">
-            <div id="content-wrap">
-                <div id="searchParameter" class="container">
-                    <div class="card-header font-weight-bold">
-                         city weather forecast 
+        <div class="container">
+            <div class="row">
+                <div class="col-4 card">
+                    <input id="searchTerm" type="text" class="form-control" placeholder="city">
+                    <div class= "savedCity">
+
                     </div>
-                    <div class="card-body container">
-                        <div class="form-group row justify-content-center">
-                            <div class="col-sm-12">
-                                <input id="searchterm" type="text" class="form-control">
-                                <div class = "btn">
-                                      <button id = "search">
-                                            search <i class="fas fa-search btn btn-default"></i>
-                                      </button>  
-                                </div>
-                            </div>
-                        </div>
-    
-                            <form class="form-group row">
-                                <div class="col-sm-2">
-                                    <button id="clearbutton" class="btn:primary" type="submit">Clear
-                                        Results</button>
-                                </div>
-                            </form>
-                        </div>         
-                    </div>
+                    <button id="search" class="btn btn-primary my-2 my-sm-0">search<i fa-search></i></button>
+                    <button id = "clear" class ="btn btn-secondary my-2 my-sm-0">clear</button> </div>
+                <div class="col-8 card city">
+                    <p class="wind">
+                        <p class="humidity">
+                            <p class="temp">
                 </div>
             </div>
+        </div>
+
+
+
+
 </body>
 
 </html>
