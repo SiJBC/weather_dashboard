@@ -1,20 +1,19 @@
 var apiKey = "4915deb164cf151c9e3b329f1c2270a7";
 
+var cityHistory = [];
+$(document).ready(function() {
 
-
-
-$("#search").on("click", function () {
-    displayWeather()
-    displayForecast()
-    displayUv()
+    $("#search").on("click", function () {
+    displayWeather();
+    displayForecast();
 
 })
 
 $(document).on('click', '.savedCity', function () {
-    // var city = localStorage.getItem(savedCity)
+    var city = localStorage.getItem("savedCity") || [];
+    console.log(city)
     displayWeather()
     displayForecast()
-    displayUv()
     console.log("this was clicked")
     $(".savedCity").empty();
     $(".city").empty();
@@ -72,9 +71,18 @@ function displayWeather() {
 
             iconCode = response.weather[0].icon
             console.log(iconCode)
+            // var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png"
+            //  console.log(iconUrl);
+            //  console.log($("#cityImage").eq(0).html());
+            // $("#cityImage").attr('src', iconUrl)
+
+
+
             var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png"
-            
-            $("#cityImage").attr('src', iconUrl)
+             $('.city').append($('<img />').attr('src', iconUrl));
+
+            // $("#cityImage").attr('src', iconUrl)
+
             $(".city").append("<h2>" + response.name + " Weather today" + "</h2>");
             $(".city").append("<p>" + "Wind Speed:" + response.wind.speed + "</p>");
             $(".city").append("<p>" + "Humidity:" + response.main.humidity + "</p>");
@@ -206,6 +214,11 @@ function getLocation(){
        })
     })
 }
+
+
+})
+
+
 
 
     
