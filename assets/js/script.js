@@ -15,7 +15,7 @@ $(document).on('click', '.savedCity', function () {
     displayWeather()
     displayForecast()
     console.log("this was clicked")
-    $(".savedCity").empty();
+    $(this).empty();
     $(".city").empty();
     $(".forecast").empty();
     $(".day1").empty();
@@ -40,7 +40,14 @@ $("#clear").on("click", function () {
 
 
 $("#myLocation"). on("click", function (){
- getLocation()
+    $(".city").empty();
+    $(".forecast").empty();
+    $(".day1").empty();
+    $(".day2").empty();
+    $(".day3").empty();
+    $(".day4").empty();
+    $(".day5").empty();
+    getLocation()
 })
 
 function displayWeather() {
@@ -199,9 +206,10 @@ function getLocation(){
 
             iconCode = response.weather[0].icon
             console.log(iconCode)
-            var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png"
+          
 
-            $("#cityImage").attr('src', iconUrl)
+            var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png"
+            $('.city').append($('<img />').attr('src', iconUrl));
             $(".city").append("<h2>" + response.name + " Weather today" + "</h2>");
             $(".city").append("<p>" + "Wind Speed:" + response.wind.speed + "</p>");
             $(".city").append("<p>" + "Humidity:" + response.main.humidity + "</p>");
@@ -219,10 +227,11 @@ function getLocation(){
 })
 
 
-
+$(document).ready(function(){
+    $('select').formSelect();
 
     
-
+})
 
 
     // wrap up all the ajax method into a function and store that function as the value 
