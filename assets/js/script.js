@@ -4,21 +4,24 @@ var cityHistory = [];
 $(document).ready(function () {
 
     displayHistory()
+    getLocation()
 
     $("#search").on("click", function () {
         var city = $("#searchTerm").val().trim();
         displayWeather(city);
         displayForecast(city);
+    
 
     })
 
 
-
-
+// citySaveDisplay()
+// function citySaveDisplay(){
     $(document).on('click', '.saved', function () {
         var city = localStorage.getItem($(this).text())
         console.log(city)
         displayWeather(city)
+        displayForecast(city);
         // displayForecast(city)
         console.log("this was clicked")
         $(this).hide();
@@ -31,6 +34,8 @@ $(document).ready(function () {
         $(".day5").empty();
 
     })
+// }
+
 
     $("#clear").on("click", function () {
         localStorage.clear()
@@ -54,6 +59,7 @@ $(document).ready(function () {
         $(".day4").empty();
         $(".day5").empty();
         getLocation()
+      
     })
 
     function displayWeather(city) {
@@ -96,23 +102,32 @@ $(document).ready(function () {
 
                 // $("#cityImage").attr('src', iconUrl)
 
-                $(".city").append("<h2>" + response.name + " Weather today" + "</h2>");
-                $(".city").append("<p>" + "Wind Speed:" + response.wind.speed + "</p>");
-                $(".city").append("<p>" + "Humidity:" + response.main.humidity + "</p>");
-                $(".city").append("<p>" + "Temperature (c)" + ((response.main.temp) - 273).toFixed(2) + "</p>");
+                $(".city").append("<h2>" + response.name + "</h2>");
+                $(".city").append("<p><ul>" + "Wind Speed:" + response.wind.speed + "</ul></p>");
+                $(".city").append("<p><ul>" + "Humidity:" + response.main.humidity + "</ul></p>");
+                $(".city").append("<p><ul>" + "Temperature (c)" + ((response.main.temp) - 273).toFixed(2) + "</ul></p>");
+               
+                // for (i = 0; i < localStorage.length; i++) { if (localStorage.getItem(city) === true) { citySaveDisplay()
+                //     }
+                //     else {
+                //         $(".savedCity").append("<button>" + response.name + "</button>")
+                //         $(".savedCity").children().last().addClass("saved")
+                //     } 
+                // } 
 
                 $(".savedCity").append("<button>" + response.name + "</button>")
                 $(".savedCity").children().last().addClass("saved")
+
+               
 
                 localStorage.setItem(city, city)
 
             })
     }
 
-    function displayForecast() {
+    function displayForecast(city) {
         $(".city").empty();
         event.preventDefault();
-        var city = $("#searchTerm").val().trim();
         var queryUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey;
 
         console.log($(this))
@@ -133,28 +148,62 @@ $(document).ready(function () {
 
 
 
+                var date1 = response.list[0].dt_txt
+                var formatedDate1 = date1.slice(0, -8);
+                var date2 = response.list[10].dt_txt
+                var formatedDate2 = date2.slice(0, -8);
+                var date3 = response.list[17].dt_txt
+                var formatedDate3 = date3.slice(0, -8);
+                var date4 = response.list[24].dt_txt
+                var formatedDate4 = date4.slice(0, -8);
+                var date5 = response.list[31].dt_txt
+                var formatedDate5 = date5.slice(0, -8);
+
+                iconCode1 = response.list[0].icon
+                var iconUrl1 = "http://openweathermap.org/img/w/" + iconCode + ".png"
+                $('.day1').append($('<img />').attr('src', iconUrl1));
+
+                iconCode2 = response.list[10].icon
+                var iconUrl2 = "http://openweathermap.org/img/w/" + iconCode + ".png"
+                $('.day2').append($('<img />').attr('src', iconUrl2));
+
+                iconCode3 = response.list[17].icon
+                var iconUrl3 = "http://openweathermap.org/img/w/" + iconCode + ".png"
+                $('.day3').append($('<img />').attr('src', iconUrl3));
+
+                iconCode3 = response.list[24].icon
+                var iconUrl3 = "http://openweathermap.org/img/w/" + iconCode + ".png"
+                $('.day4').append($('<img />').attr('src', iconUrl3));
+
+                iconCode3 = response.list[31].icon
+                var iconUrl3 = "http://openweathermap.org/img/w/" + iconCode + ".png"
+                $('.day5').append($('<img />').attr('src', iconUrl3));
+
+           
 
 
-                $(".day1").append("<h3>" + response.list[0].dt_txt + "<h3>");
-                $(".day1").attr("<img>" + response.list[0].weather[0].icon + ".png" + "<img>")
+
+                 
+                $(".city").prepend("<h4>" + formatedDate1 + "</h4>");
+                $(".day1").append("<h4>" + formatedDate1 + "<h4>");
                 $(".day1").append("<p>" + "Humidity:" + response.list[0].main.humidity + "</p>");
-                $(".day1").append("<p>" + "Temperature (c)" + ((response.list[0].main.temp) - 273).toFixed(2) + "</p>");
+                $(".day1").append("<p><ul>" + "Temperature (c)" + ((response.list[0].main.temp) - 273).toFixed(2) + "<ul></p>");
 
-                $(".day2").append("<h3>" + response.list[4].dt_txt + "<h3>");
-                $(".day2").append("<p>" + "Humidity:" + response.list[1].main.humidity + "</p>");
-                $(".day2").append("<p>" + "Temperature (c)" + ((response.list[1].main.temp) - 273).toFixed(2) + "</p>");
+                $(".day2").append("<h4>" + formatedDate2 + "<h4>");
+                $(".day2").append("<p>" + "Humidity:" + response.list[10].main.humidity + "</p>");
+                $(".day2").append("<p>" + "Temperature (c)" + ((response.list[10].main.temp) - 273).toFixed(2) + "</p>");
 
-                $(".day3").append("<h3>" + response.list[10].dt_txt + "<h3>");
-                $(".day3").append("<p>" + "Humidity:" + response.list[2].main.humidity + "</p>");
-                $(".day3").append("<p>" + "Temperature (c)" + ((response.list[2].main.temp) - 273).toFixed(2) + "</p>");
+                $(".day3").append("<h4>" + formatedDate3 + "<h4>");
+                $(".day3").append("<p>" + "Humidity:" + response.list[17].main.humidity + "</p>");
+                $(".day3").append("<p>" + "Temperature (c)" + ((response.list[17].main.temp) - 273).toFixed(2) + "</p>");
 
-                $(".day4").append("<h3>" + response.list[15].dt_txt + "<h3>");
-                $(".day4").append("<p>" + "Humidity:" + response.list[3].main.humidity + "</p>");
-                $(".day4").append("<p>" + "Temperature (c)" + ((response.list[3].main.temp) - 273).toFixed(2) + "</p>");
+                $(".day4").append("<h4>" + formatedDate4 + "<h4>");
+                $(".day4").append("<p>" + "Humidity:" + response.list[24].main.humidity + "</p>");
+                $(".day4").append("<p>" + "Temperature (c)" + ((response.list[24].main.temp) - 273).toFixed(2) + "</p>");
 
-                $(".day5").append("<h3>" + response.list[20].dt_txt + "<h3>");
-                $(".day5").append("<p>" + "Humidity:" + response.list[4].main.humidity + "</p>");
-                $(".day5").append("<p>" + "Temperature (c)" + ((response.list[4].main.temp) - 273).toFixed(2) + "</p>");
+                $(".day5").append("<h4>" + formatedDate5 + "<h4>");
+                $(".day5").append("<p>" + "Humidity:" + response.list[31].main.humidity + "</p>");
+                $(".day5").append("<p>" + "Temperature (c)" + ((response.list[31].main.temp) - 273).toFixed(2) + "</p>");
 
 
 
@@ -174,8 +223,11 @@ $(document).ready(function () {
                         .then(function (response) {
                             console.log(response)
                             console.log(uvUrl)
-                            $(".city").append("<p>" + "UVindex:" + response.value + "</p>")
-                            // .addClass(".uVindex");
+                            $(".city").append("<span>" + "UVindex:" + response.value + "</span>")
+                            $("span").addClass("uVIndex")
+                           
+                           
+                           
                         })
                 }
 
@@ -239,6 +291,8 @@ function displayHistory() {
         $(".savedCity").children().last().addClass("saved")
     }
 }
+
+
 
 
 

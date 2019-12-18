@@ -3,8 +3,13 @@
     margin: auto;
 }
 
+.city{
+    width: 50%
+    
+}
+
 .jumbotron{
-    background-color: #0978e7;
+    background-color: #868f9b;
 } 
 
 .fa-newspaper {
@@ -20,7 +25,8 @@ h1 {
 h2{
     color: #272626;
     font-weight: lighter;
-    font-size: 24px;
+    font-size: 32px;
+    font-style: bold;
 }
 
 #searchParameter {
@@ -39,36 +45,41 @@ h2{
 
 
 .day1{
-    background-color:rgb(0, 17, 255);
-    margin-left: 5%;
+   
+    margin-left: 7%;
     border-style: solid;
     border-width: 0.5ch;
-    color: white  ;
+    color: black  ;
+    background-color:  #8e9bac;
 }
 .day2{
-    background-color: rgb(0, 17, 255);
+
     border-style: solid;
     border-width: 0.5ch;
-    color: white  ;
+    color: black  ;
+    background-color:  #8e9bac;
 }
 
 .day3{
-    background-color: rgb(0, 17, 255);
+    
     border-style: solid;
     border-width: 0.5ch;
-    color: white  ;
+    color: black  ;
+    background-color:  #8e9bac;
 }
 .day4{
-    background-color: rgb(0, 17, 255);
+   
     border-style: solid;
     border-width: 0.5ch;
-    color: white ;
+    color: black ;
+    background-color:  #8e9bac;
 }
 .day5{
-    background-color: rgb(0, 17, 255);
+ 
     border-style: solid;
     border-width: 0.5ch;
-    color: white  ;
+    color: black  ;
+    background-color:  #8e9bac;
 }
 
 .uVindex{
@@ -77,5 +88,8 @@ color: #eee;
 }
    
 
-
+button{
+    width:100%;
+    background-color: #8e9bac;
+}
 

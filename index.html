@@ -24,58 +24,63 @@
             <div class="container-fluid">
                 <h1 class="display-4 text center font-weight-bold">
                     Weather Dashboard
-                    <i class="wi-sunset:before"></i>
+                    <i class="fa fa-bolt"></i>
                 </h1>
             </div>
         </div>
     </div>
 
-    <div id="page-container">
+   
         <div class="container">
-            <div class="row">
-              
-                <div class="col-2 card">
-                    <input id="searchTerm" type="text" class="form-control" placeholder="city">
-                    <div class="savedCity">
+            
+            <div class = "row">
+                    <div class="col-4 card">
+                            <input id="searchTerm" type="text" class="form-control" placeholder="city">
+                            <div class="savedCity">
+            
+                            </div>
+            
+                            <button id="search" class="btn btn-primary my-2 my-sm-0">search <br> <i class="fa fa-search">
+                                </i></button>
+                            <br>
+                            <button id="myLocation" class="btn btn-info my-2 my-sm-0">My weather today<br> <i
+                                    class="fas fa-sun"></i> </button>
+                            <button id="clear" class="btn btn-danger my-2 my-sm-0">clear<br> <i class="fas fa-eraser"></i>
+                            </button>
+                        </div>
+                        <div class = "col-md-4 col-sm-12 card">
+                            
+                                   
+                                    <div class="city"></div>
+                        </div>
+                           
+                        
 
-                    </div>
-                    
-                    <button id="search" class="btn btn-primary my-2 my-sm-0">search<i fa-search></i></button>
-                    <br>
-                    <button id="myLocation" class="btn btn-info my-2 my-sm-0">My Location</button>
-                    <button id="clear" class="btn btn-secondary my-2 my-sm-0">clear</button>
-                </div>
-              
-              
-                <div class="col-10  city">
-                        <img id = "cityImage"></img>
-                   
-                    <!-- <p class="wind">
-                        <p class="humidity">
-                            <p class="temp"> -->
-                                
-                                
-                </div>
-          
             </div>
+  
         </div>
+
+
 
         <div>
-        
-        <div class="row">
-            <div class="forecast"></div>
+            <div class = "container-fluid">
+                    <div class="row">
+                            <div class="card day1 col-md-2 col-sm-12"></div>
+                        
+                            <div class="card day2 col-md-2 col-sm-12"></div>
+                        
+                            <div class="card day3 col-md-2 col-sm-12"></div>
+                          
+                            <div class="card day4 col-md-2 col-sm-12"></div>
+                          
+                            <div class="card day5 col-md-2 col-sm-12"></div>
+                           
+                        </div>
+            </div>
+
+
+
         </div>
-       
-        <div class="row">
-            <div class=" day1 col-2"></div>
-            <div class=" day2 col-2"></div>
-            <div class=" day3 col-2"></div>
-            <div class=" day4 col-2"></div>
-            <div class=" day5 col-2"></div>
-    </div>
-
-
-
 
 </body>
 
