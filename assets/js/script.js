@@ -5,7 +5,18 @@ $(document).ready(function () {
 
 
     displayHistory()
-    getLocation()
+
+    if (localStorage.length === 0){
+            getLocation();
+    }
+    else {
+      let lastCity =  localStorage.getItem(localStorage.key(localStorage.length-1)) 
+      console.log("Last city is "+lastCity );
+      displayWeather(lastCity);
+      displayForecast(lastCity);  
+    }
+    
+
 
     $("#search").on("click", function () {
         var city = $("#searchTerm").val().trim();
@@ -111,7 +122,7 @@ $(document).ready(function () {
 
     function displayForecast(city) {
         $(".city").empty();
-        event.preventDefault();
+        // event.preventDefault();
         var queryUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey;
 
         console.log($(this))
@@ -259,36 +270,33 @@ $(document).ready(function () {
 
                     $(".savedCity").children().last().addClass(response.name)
 
-
-
                 })
         })
     }
+
+    function displayHistory() {
+        for (i = 0; i < localStorage.length; i++) {
+            $(".savedCity").append("<button>" + localStorage.getItem(localStorage.key(i)) + "</button>")
+            $(".savedCity").children().last().addClass("saved")
+        }
+    }
+
+    // function displayLast(){
+        
+    //     // var savedCityList = []
+    //     // for (i=0; i <localStorage.length; i++){
+    //     //     savedCityList = localStorage.getItem(localStorage.key(i))
+    //     //     console.log(savedCityList)
+    //     // }
+    //     console.log(localStorage.getItem(localStorage.key(0)));
+    //     displayForecast(localStorage.getItem(localStorage.key(0)));
+    // }
 
 
 })
 
 
-function displayHistory() {
-    for (i = 0; i < localStorage.length; i++) {
-        $(".savedCity").append("<button>" + localStorage.getItem(localStorage.key(i)) + "</button>")
-        $(".savedCity").children().last().addClass("saved")
-    }
-}
 
-function displayLast(){
-    
-    var savedCityList = []
-    for (i=0; i <localStorage.length; i++)
-    {savedCityList = localStorage.getItem(localStorage.key(i))
-console.log(savedCityList)
-    }
-
-   city = savedCityList
-   console.log(city)
-
-
-}
 
 
 
