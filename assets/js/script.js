@@ -1,7 +1,8 @@
 var apiKey = "4915deb164cf151c9e3b329f1c2270a7";
 
-var cityHistory = [];
+
 $(document).ready(function () {
+
 
     displayHistory()
     getLocation()
@@ -15,14 +16,12 @@ $(document).ready(function () {
     })
 
 
-// citySaveDisplay()
-// function citySaveDisplay(){
+
     $(document).on('click', '.saved', function () {
         var city = localStorage.getItem($(this).text())
         console.log(city)
         displayWeather(city)
         displayForecast(city);
-        // displayForecast(city)
         console.log("this was clicked")
         $(this).hide();
         $(".city").empty();
@@ -34,7 +33,6 @@ $(document).ready(function () {
         $(".day5").empty();
 
     })
-// }
 
 
     $("#clear").on("click", function () {
@@ -80,40 +78,26 @@ $(document).ready(function () {
             url: queryUrl,
             method: "GET",
         })
-            // We store all of the retrieved data inside of an object called "response"
+
             .then(function (response) {
-                // Log the queryURL
-                // console.log(queryURL);
-                // Log the resulting object
+    
                 console.log(response);
                 console.log(queryUrl)
 
                 iconCode = response.weather[0].icon
                 console.log(iconCode)
-                // var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png"
-                //  console.log(iconUrl);
-                //  console.log($("#cityImage").eq(0).html());
-                // $("#cityImage").attr('src', iconUrl)
-
-
 
                 var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png"
                 $('.city').append($('<img />').attr('src', iconUrl));
 
-                // $("#cityImage").attr('src', iconUrl)
+          
 
                 $(".city").append("<h2>" + response.name + "</h2>");
                 $(".city").append("<p><ul>" + "Wind Speed:" + response.wind.speed + "</ul></p>");
                 $(".city").append("<p><ul>" + "Humidity:" + response.main.humidity + "</ul></p>");
                 $(".city").append("<p><ul>" + "Temperature (c)" + ((response.main.temp) - 273).toFixed(2) + "</ul></p>");
                
-                // for (i = 0; i < localStorage.length; i++) { if (localStorage.getItem(city) === true) { citySaveDisplay()
-                //     }
-                //     else {
-                //         $(".savedCity").append("<button>" + response.name + "</button>")
-                //         $(".savedCity").children().last().addClass("saved")
-                //     } 
-                // } 
+     
 
                 $(".savedCity").append("<button>" + response.name + "</button>")
                 $(".savedCity").children().last().addClass("saved")
@@ -268,7 +252,7 @@ $(document).ready(function () {
 
                     var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png"
                     $('.city').append($('<img />').attr('src', iconUrl));
-                    $(".city").append("<h2>" + response.name + " Weather today" + "</h2>");
+                    $(".city").prepend("<h2>" + response.name + " Weather today" + "</h2>");
                     $(".city").append("<p>" + "Wind Speed:" + response.wind.speed + "</p>");
                     $(".city").append("<p>" + "Humidity:" + response.main.humidity + "</p>");
                     $(".city").append("<p>" + "Temperature (c)" + ((response.main.temp) - 273).toFixed(2) + "</p>");
@@ -292,17 +276,22 @@ function displayHistory() {
     }
 }
 
+function displayLast(){
+    
+    var savedCityList = []
+    for (i=0; i <localStorage.length; i++)
+    {savedCityList = localStorage.getItem(localStorage.key(i))
+console.log(savedCityList)
+    }
+
+   city = savedCityList
+   console.log(city)
+
+
+}
 
 
 
 
-    // wrap up all the ajax method into a function and store that function as the value 
 
-    // make sure display forecast takes argument the same way as display weather
-    // remove the variable from the function and add an argument
-    // as apose to this.hide try to add a check if the if statement for the condition localstorage .get item and search 
-    // for the city and do a check to see localstorage.getitem(city) ==== true else add to local storage 
-    // call the 
-    // in the display history run the display function localstorage 
-    // call the current location 
-    // google how to retrieve the last index in the array 
+
