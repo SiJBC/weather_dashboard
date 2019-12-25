@@ -3,7 +3,7 @@ var apiKey = "4915deb164cf151c9e3b329f1c2270a7";
 
 $(document).ready(function () {
 
-// displays the previous searches in a list on the side
+    // displays the previous searches in a list on the side
     displayHistory()
 
     // checks if there are no previous searches and then asks user to activate geolocation tracking services
@@ -11,32 +11,34 @@ $(document).ready(function () {
         getLocation();
     }
     else {
-        let lastCity = localStorage.getItem(localStorage.key(localStorage.length - 1))
+        let lastCity = $(".savedCity").children().last().attr('id')
         console.log("Last city is " + lastCity);
         displayWeather(lastCity);
         displayForecast(lastCity);
+       
     }
 
 
-// implements the search function from the users input
+    // implements the search function from the users input
     $("#search").on("click", function () {
         var city = $("#searchTerm").val().trim();
         displayWeather(city);
         displayForecast(city);
 
+        $("#searchTerm").val('')
+
 
     })
 
 
-// the on click function for the previously searched for history
-// also clears the previous results
+    // the on click function for the previously searched for history
+    // also clears the previous results
     $(document).on('click', '.saved', function () {
         var city = localStorage.getItem($(this).text())
         console.log(city)
         displayWeather(city)
         displayForecast(city);
         console.log("this was clicked")
-        $(this).hide();
         $(".city").empty();
         $(".forecast").empty();
         $(".day1").empty();
@@ -44,12 +46,15 @@ $(document).ready(function () {
         $(".day3").empty();
         $(".day4").empty();
         $(".day5").empty();
+        $(".savedCity").empty();
+        localStorage.clear()
 
     })
 
-// the clear button to clear all the local storage values 
+    // the clear button to clear all the local storage values 
     $("#clear").on("click", function () {
         localStorage.clear()
+        $("#searchTerm").val('')
         $(".savedCity").empty();
         $(".city").empty();
         $(".forecast").empty();
@@ -60,7 +65,7 @@ $(document).ready(function () {
         $(".day5").empty();
     })
 
-// the my local weather button
+    // the my local weather button
     $("#myLocation").on("click", function () {
         $(".city").empty();
         $(".forecast").empty();
@@ -72,7 +77,7 @@ $(document).ready(function () {
         getLocation()
 
     })
-// the function to display the current weather
+    // the function to display the current weather
     function displayWeather(city) {
         $(".city").empty();
         $(".forecast").empty();
@@ -82,8 +87,17 @@ $(document).ready(function () {
         $(".day4").empty();
         $(".day5").empty();
 
-// the ajax api call for todays weather
-        var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
+        // the ajax api call for todays weather
+
+        var httpsUrl = ""
+                    
+        if (location.protocol === 'http:') {
+            httpsUrl = 'http://api.openweathermap.org/data/2.5/weather?q=';
+         } else {
+            httpsUrl = 'https://api.openweathermap.org/data/2.5/weather?q=';
+         }
+        var queryUrl = httpsUrl + city + "&appid=" + apiKey;
+
         console.log($(this))
         $.ajax({
             url: queryUrl,
@@ -97,8 +111,8 @@ $(document).ready(function () {
 
                 iconCode = response.weather[0].icon
                 console.log(iconCode)
-// conveerting the icon into a formatted attribute that can be displayed
-                var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png"
+                // conveerting the icon into a formatted attribute that can be displayed
+                var iconUrl = "https://openweathermap.org/img/w/" + iconCode + ".png"
                 $('.city').append($('<img />').attr('src', iconUrl));
 
 
@@ -110,20 +124,31 @@ $(document).ready(function () {
                 $(".city").append("<p><ul>" + "Temperature (c)" + ((response.main.temp) - 273).toFixed(2) + "</ul></p>");
 
 
-// adding the buttons to access the previous history
-                $(".savedCity").append("<button>" + response.name + "</button>")
-                $(".savedCity").children().last().addClass("saved")
+                // adding the buttons to access the previous history
 
+                if (localStorage.getItem(response.name) === null) {
+                    $(".savedCity").append("<ol><button>" + response.name + "<ol></button>")
+                    $(".savedCity").children().last().addClass("saved")
+                    $(".savedCity").children().last().attr("Id", response.name)
+                }
 
 
                 localStorage.setItem(city, city)
 
             })
     }
-// displaying the 5 day forecast
+    // displaying the 5 day forecast
     function displayForecast(city) {
         $(".city").empty();
-        var queryUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey;
+
+        var httpsUrl = ""
+                    
+        if (location.protocol === 'http:') {
+            httpsUrl = 'http://api.openweathermap.org/data/2.5/forecast?q=';
+         } else {
+            httpsUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=';
+         }
+        var queryUrl = httpsUrl + city + "&appid=" + apiKey;
 
         console.log($(this))
         $.ajax({
@@ -139,8 +164,8 @@ $(document).ready(function () {
                 console.log(response.list[0].main.temp)
 
 
-// formatting the date so that it no longer includes the time as well by treating it as a string the length can be reduced with the .slice()
-// function in javascript
+                // formatting the date so that it no longer includes the time as well by treating it as a string the length can be reduced with the .slice()
+                // function in javascript
 
                 var date1 = response.list[0].dt_txt
                 var formatedDate1 = date1.slice(0, -8);
@@ -181,7 +206,7 @@ $(document).ready(function () {
 
                 $(".city").prepend("<h4>" + formatedDate1 + "</h4>");
                 $(".day1").append("<h4>" + formatedDate1 + "<h4>");
-                $(".day1").append("<p>" + "Humidity:" + response.list[0].main.humidity + "</p>");
+                $(".day1").append("<p>" + "Humidity1:" + response.list[0].main.humidity + "</p>");
                 $(".day1").append("<p><ul>" + "Temperature (c)" + ((response.list[0].main.temp) - 273).toFixed(2) + "<ul></p>");
 
                 $(".day2").append("<h4>" + formatedDate2 + "<h4>");
@@ -204,15 +229,22 @@ $(document).ready(function () {
 
                 console.log(response.city.coord.lat)
                 console.log(response.city.coord.lon)
-// to display the uv in the current weather we need the lat and lon from the forecast api call this can then be transfered over into the display UV function
+                // to display the uv in the current weather we need the lat and lon from the forecast api call this can then be transfered over into the display UV function
                 var lat = response.city.coord.lat
                 var lon = response.city.coord.lon
 
-// this function ammends the current weather element even though it runs at a different time, this is the assynchronous feature of ajax
-// this can be demonstrated by the different times which the information is displayed on the page
+                // this function ammends the current weather element even though it runs at a different time, this is the assynchronous feature of ajax
+                // this can be demonstrated by the different times which the information is displayed on the page
 
                 function displayUv() {
-                    var uvUrl = "http://api.openweathermap.org/data/2.5/uvi?appid=9edde4d3d50871b7d0d7074d24782ded&lat=" + lat + "&lon=" + lon;
+                    var httpsUrl = ""
+                    
+                    if (location.protocol === 'http:') {
+                        httpsUrl = 'http://api.openweathermap.org/data/2.5/uvi?';
+                     } else {
+                        httpsUrl = 'https://api.openweathermap.org/data/2.5/uvi?';
+                     } 
+                    url = httpsUrl + "&lon" + lat + "&lon=" + lon;
                     $.ajax({
                         url: uvUrl,
                         method: "GET",
@@ -233,7 +265,7 @@ $(document).ready(function () {
     }
 
 
-// to get the current location we use the getCurrentPostion() function of javscript
+    // to get the current location we use the getCurrentPostion() function of javscript
     function getLocation() {
 
 
@@ -243,8 +275,14 @@ $(document).ready(function () {
             var lng = position.coords.longitude
 
             console.log(lat, lng)
-
-            latLonUrl = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&appid=" + apiKey
+            var httpsUrl = ""
+                    
+            if (location.protocol === 'http:') {
+                httpsUrl = 'http://api.openweathermap.org/data/2.5/weather?';
+             } else {
+                httpsUrl = 'https://api.openweathermap.org/data/2.5/weather?';
+             }
+            latLonUrl = httpsUrl + "lat=" + lat + "&lon=" + lng + "&appid=" + apiKey
 
             $.ajax({
                 url: latLonUrl,
@@ -261,26 +299,33 @@ $(document).ready(function () {
 
                     iconCode = response.weather[0].icon
                     console.log(iconCode)
-
-
-                    var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png"
+                    
+                    var httpsUrl = ""
+                    
+                    if (location.protocol === 'http:') {
+                        httpsUrl = 'http://api.openweathermap.org/data/2.5/weather?lat=21.1682895&lon=-101.6723306&units=imperial&APPID=ec50a6072ac189dee111acdd3a38ab9f';
+                     } else {
+                        httpsUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=21.1682895&lon=-101.6723306&units=imperial&APPID=ec50a6072ac189dee111acdd3a38ab9f';
+                     }
+                    var iconUrl = httpsUrl + iconCode + ".png"
                     $('.city').append($('<img />').attr('src', iconUrl));
                     $(".city").prepend("<h2>" + response.name + " Weather today" + "</h2>");
                     $(".city").append("<p>" + "Wind Speed:" + response.wind.speed + "</p>");
                     $(".city").append("<p>" + "Humidity:" + response.main.humidity + "</p>");
                     $(".city").append("<p>" + "Temperature (c)" + ((response.main.temp) - 273).toFixed(2) + "</p>");
 
-                    $(".savedCity").children().last().addClass(response.name)
+                    // $(".savedCity").children().last().addClass(response.name)
 
                 })
         })
     }
-// we loop through the local storage to make sure that each previously searched for city remains on the page
+    // we loop through the local storage to make sure that each previously searched for city remains on the page
 
     function displayHistory() {
         for (i = 0; i < localStorage.length; i++) {
-            $(".savedCity").append("<button>" + localStorage.getItem(localStorage.key(i)) + "</button>")
+            $(".savedCity").append("<ol><button>" + localStorage.getItem(localStorage.key(i)) + "<ol></button>")
             $(".savedCity").children().last().addClass("saved")
+            $(".savedCity").children().last().attr("Id", localStorage.getItem(localStorage.key(i)))
         }
     }
 
